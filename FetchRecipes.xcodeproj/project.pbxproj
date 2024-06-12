@@ -11,6 +11,12 @@
 		BC0FC2D82C18DB5900539FB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2D72C18DB5900539FB1 /* ContentView.swift */; };
 		BC0FC2DA2C18DB5F00539FB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC0FC2D92C18DB5F00539FB1 /* Assets.xcassets */; };
 		BC0FC2DD2C18DB5F00539FB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC0FC2DC2C18DB5F00539FB1 /* Preview Assets.xcassets */; };
+		BC0FC2E42C18DC9000539FB1 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2E32C18DC9000539FB1 /* Meal.swift */; };
+		BC0FC2E62C18E3FF00539FB1 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2E52C18E3FF00539FB1 /* CategoryListView.swift */; };
+		BC0FC2E82C18E88C00539FB1 /* MealLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */; };
+		BC0FC2EA2C18F9A200539FB1 /* MealDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2E92C18F9A200539FB1 /* MealDetailedView.swift */; };
+		BC0FC2EC2C19824400539FB1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2EB2C19824400539FB1 /* Config.swift */; };
+		BC0FC2F02C19996700539FB1 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2EF2C19996700539FB1 /* CachedAsyncImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		BC0FC2D72C18DB5900539FB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BC0FC2D92C18DB5F00539FB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC0FC2DC2C18DB5F00539FB1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BC0FC2E32C18DC9000539FB1 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		BC0FC2E52C18E3FF00539FB1 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
+		BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLoader.swift; sourceTree = "<group>"; };
+		BC0FC2E92C18F9A200539FB1 /* MealDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailedView.swift; sourceTree = "<group>"; };
+		BC0FC2EB2C19824400539FB1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		BC0FC2EF2C19996700539FB1 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +65,12 @@
 			children = (
 				BC0FC2D52C18DB5900539FB1 /* FetchRecipesApp.swift */,
 				BC0FC2D72C18DB5900539FB1 /* ContentView.swift */,
+				BC0FC2E52C18E3FF00539FB1 /* CategoryListView.swift */,
+				BC0FC2E92C18F9A200539FB1 /* MealDetailedView.swift */,
+				BC0FC2EF2C19996700539FB1 /* CachedAsyncImage.swift */,
+				BC0FC2E32C18DC9000539FB1 /* Meal.swift */,
+				BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */,
+				BC0FC2EB2C19824400539FB1 /* Config.swift */,
 				BC0FC2D92C18DB5F00539FB1 /* Assets.xcassets */,
 				BC0FC2DB2C18DB5F00539FB1 /* Preview Content */,
 			);
@@ -138,6 +156,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC0FC2D82C18DB5900539FB1 /* ContentView.swift in Sources */,
+				BC0FC2EA2C18F9A200539FB1 /* MealDetailedView.swift in Sources */,
+				BC0FC2F02C19996700539FB1 /* CachedAsyncImage.swift in Sources */,
+				BC0FC2E42C18DC9000539FB1 /* Meal.swift in Sources */,
+				BC0FC2EC2C19824400539FB1 /* Config.swift in Sources */,
+				BC0FC2E62C18E3FF00539FB1 /* CategoryListView.swift in Sources */,
+				BC0FC2E82C18E88C00539FB1 /* MealLoader.swift in Sources */,
 				BC0FC2D62C18DB5900539FB1 /* FetchRecipesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
