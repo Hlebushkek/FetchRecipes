@@ -26,19 +26,23 @@ import Foundation
         isLoading = true
         error = nil
         
-        task = Task {
+        task = Task { [weak self] in
+            guard let self else { return }
+            
             do {
                 let meal = try await loader.load(id: id)
-                Task { @MainActor in
+                await MainActor.run {
                     self.meal = meal
                     self.isLoading = false
                 }
             } catch {
-                Task { @MainActor in
+                await MainActor.run {
                     self.error = error
                     self.isLoading = false
                 }
             }
         }
+        
+        await task?.value
     }
 }

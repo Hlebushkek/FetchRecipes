@@ -24,14 +24,23 @@ import SwiftUI
         isLoading = true
         error = nil
         
-        task = Task {
-            do {
-                briefs = try await loader.load().sorted(by: { $0.strMeal < $1.strMeal })
-            } catch {
-                self.error = error
-            }
+        task = Task { [weak self] in
+            guard let self else { return }
             
-            isLoading = false
+            do {
+                let briefs = try await loader.load().sorted(by: { $0.strMeal < $1.strMeal })
+                await MainActor.run {
+                    self.briefs = briefs
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.error = error
+                    self.isLoading = false
+                }
+            }
         }
+        
+        await task?.value
     }
 }
