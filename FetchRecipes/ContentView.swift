@@ -8,16 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var viewModel: CategoryViewModel
+    
+    init(category: String) {
+        self.viewModel = CategoryViewModel(category: category)
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {
-                CategoryListView(category: Config.category)
+                CategoryMealListView()
                     .padding(.horizontal)
+                    .environment(viewModel)
+            }
+            .refreshable {
+                guard !viewModel.isLoading else {
+                    return
+                }
+                
+                await viewModel.reload()
             }
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(category: Config.category)
 }

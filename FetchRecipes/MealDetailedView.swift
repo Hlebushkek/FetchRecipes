@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct MealDetailedView: View {
-    var id: String
-    
     @Environment(\.dismiss) var dismiss
     
-    @State private var meal: Meal?
-    private let loader = MealLoader()
+    @State private var viewModel: MealViewModel
+    
+    init(id: String) {
+        self.viewModel = MealViewModel(id: id)
+    }
     
     var body: some View {
         ScrollView {
             GeometryReader { geo in
-                CachedAsyncImage(url: meal?.strMealThumb) { phase in
+                CachedAsyncImage(url: viewModel.meal?.strMealThumb) { phase in
                     switch phase {
                     case .success(let image):
                         image.resizable()
@@ -32,13 +33,13 @@ struct MealDetailedView: View {
             .aspectRatio(1, contentMode: .fit)
             
             VStack(alignment: .leading, spacing: 16) {
-                Text(meal?.strMeal ?? "Unknown")
+                Text(viewModel.meal?.strMeal ?? "")
                     .font(.title)
                     .bold()
                 
-                Text(meal?.strInstructions ?? "Unknown")
+                Text(viewModel.meal?.strInstructions ?? "")
                 
-                if let ingredients = meal?.ingredients {
+                if let ingredients = viewModel.meal?.ingredients {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Ingredients:")
                             .font(.title2)
@@ -51,16 +52,19 @@ struct MealDetailedView: View {
                 }
             }
             .padding(.horizontal)
+            .errorHandling(error: viewModel.error)
         }
-        .ignoresSafeArea(edges: .top)
-        .redacted(reason: meal == nil ? .placeholder : [])
+        .redacted(reason: viewModel.isLoading && viewModel.meal == nil ? .placeholder : [])
+        .refreshable {
+            guard !viewModel.isLoading else {
+                return
+            }
+            
+            await viewModel.reload()
+        }
         .task {
-            try? await load()
+            await viewModel.reload()
         }
-    }
-    
-    private func load() async throws {
-        meal = try? await loader.load(id: id)
     }
 }
 

@@ -8,6 +8,13 @@
 import SwiftUI
 
 class MealBriefLoader {
+    private var urlSession: URLSession {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForResource = 30
+        
+        return URLSession(configuration: configuration)
+    }
+    
     let category: String
     
     init(category: String) {
@@ -19,7 +26,7 @@ class MealBriefLoader {
         let apiEndpoint = Config.baseURL.appending(path: "filter.php").appending(queryItems: [categoryQuery])
         let req = URLRequest(url: apiEndpoint)
         
-        let (data, _) = try await URLSession.shared.data(for: req)
+        let (data, _) = try await urlSession.data(for: req)
         let container = try JSONDecoder().decode(MealBriefs.self, from: data)
         
         return container.meals
@@ -27,12 +34,19 @@ class MealBriefLoader {
 }
 
 class MealLoader {
+    private var urlSession: URLSession {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForResource = 30
+        
+        return URLSession(configuration: configuration)
+    }
+    
     func load(id: String) async throws -> Meal? {
         let idQuery = URLQueryItem(name: "i", value: id)
         let apiEndpoint = Config.baseURL.appending(path: "lookup.php").appending(queryItems: [idQuery])
         let req = URLRequest(url: apiEndpoint)
         
-        let (data, _) = try await URLSession.shared.data(for: req)
+        let (data, _) = try await urlSession.data(for: req)
         let meals = try JSONDecoder().decode(Meals.self, from: data)
         
         return meals.meals.first

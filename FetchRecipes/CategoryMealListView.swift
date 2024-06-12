@@ -1,5 +1,5 @@
 //
-//  CategoryListView.swift
+//  CategoryMealListView.swift
 //  FetchRecipes
 //
 //  Created by Hlib Sobolevskyi on 2024-06-11.
@@ -7,38 +7,36 @@
 
 import SwiftUI
 
-struct CategoryListView: View {
-    let loader: MealBriefLoader
-    @State private var briefs: [MealBrief] = []
-    
-    init(category: String) {
-        self.loader = MealBriefLoader(category: category)
-    }
+struct CategoryMealListView: View {
+    @Environment(CategoryViewModel.self) private var viewModel
     
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 1), spacing: 8) {
-            ForEach(briefs) { brief in
-                NavigationLink {
-                    MealDetailedView(id: brief.idMeal)
-                } label: {
-                    MealBriefView(brief: brief)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+            if viewModel.isLoading && viewModel.briefs.isEmpty {
+                ProgressView()
+            } else if let error = viewModel.error {
+                Text(error.localizedDescription)
+            } else {
+                ForEach(viewModel.briefs) { brief in
+                    NavigationLink {
+                        MealDetailedView(id: brief.idMeal)
+                            .ignoresSafeArea(edges: .top)
+                    } label: {
+                        MealBriefView(brief: brief)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .foregroundStyle(.primary)
                 }
-                .foregroundStyle(.primary)
             }
         }
-        .navigationTitle(loader.category)
+        .navigationTitle(viewModel.loader.category)
         .task {
-            try? await load()
+            await viewModel.reload()
         }
-    }
-    
-    private func load() async throws {
-        briefs = try await loader.load().sorted(by: { $0.strMeal < $1.strMeal })
     }
 }
 
-extension CategoryListView {
+extension CategoryMealListView {
     struct MealBriefView: View {
         var brief: MealBrief
         
@@ -79,5 +77,5 @@ extension CategoryListView {
 }
 
 #Preview {
-    CategoryListView(category: "Dessert")
+    CategoryMealListView()
 }
