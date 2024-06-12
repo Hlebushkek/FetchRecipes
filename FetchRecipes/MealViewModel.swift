@@ -23,8 +23,11 @@ import Foundation
     
     func reload() async {
         task?.cancel()
-        isLoading = true
-        error = nil
+        
+        await MainActor.run {
+            isLoading = true
+            error = nil
+        }
         
         task = Task { [weak self] in
             guard let self else { return }
