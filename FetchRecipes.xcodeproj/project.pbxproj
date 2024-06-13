@@ -93,17 +93,12 @@
 			children = (
 				BC0FC2D52C18DB5900539FB1 /* FetchRecipesApp.swift */,
 				BC0FC2D72C18DB5900539FB1 /* ContentView.swift */,
-				BC0FC2E52C18E3FF00539FB1 /* CategoryMealListView.swift */,
-				BC0FC2F12C1A438C00539FB1 /* CategoryViewModel.swift */,
-				BC0FC2E92C18F9A200539FB1 /* MealDetailedView.swift */,
-				BC0FC2F32C1A515500539FB1 /* MealViewModel.swift */,
-				BC0FC2EF2C19996700539FB1 /* CachedAsyncImage.swift */,
-				BC0FC2E32C18DC9000539FB1 /* Meal.swift */,
-				BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */,
+				BC0FC3092C1A6D3E00539FB1 /* Helpers */,
+				BC0FC3082C1A6CFC00539FB1 /* Views */,
+				BC0FC30C2C1A6DE800539FB1 /* Models */,
 				BC0FC2EB2C19824400539FB1 /* Config.swift */,
 				BC0FC2D92C18DB5F00539FB1 /* Assets.xcassets */,
 				BC0FC2DB2C18DB5F00539FB1 /* Preview Content */,
-				BC0FC2F72C1A5FB100539FB1 /* View+ErrorHandling.swift */,
 			);
 			path = FetchRecipes;
 			sourceTree = "<group>";
@@ -122,6 +117,51 @@
 				BC0FC3012C1A62B100539FB1 /* FetchRecipesTests.swift */,
 			);
 			path = FetchRecipesTests;
+			sourceTree = "<group>";
+		};
+		BC0FC3082C1A6CFC00539FB1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BC0FC30A2C1A6D8100539FB1 /* BriefsList */,
+				BC0FC30B2C1A6D9000539FB1 /* DetailedView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BC0FC3092C1A6D3E00539FB1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BC0FC2EF2C19996700539FB1 /* CachedAsyncImage.swift */,
+				BC0FC2F72C1A5FB100539FB1 /* View+ErrorHandling.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BC0FC30A2C1A6D8100539FB1 /* BriefsList */ = {
+			isa = PBXGroup;
+			children = (
+				BC0FC2E52C18E3FF00539FB1 /* CategoryMealListView.swift */,
+				BC0FC2F12C1A438C00539FB1 /* CategoryViewModel.swift */,
+			);
+			path = BriefsList;
+			sourceTree = "<group>";
+		};
+		BC0FC30B2C1A6D9000539FB1 /* DetailedView */ = {
+			isa = PBXGroup;
+			children = (
+				BC0FC2E92C18F9A200539FB1 /* MealDetailedView.swift */,
+				BC0FC2F32C1A515500539FB1 /* MealViewModel.swift */,
+			);
+			path = DetailedView;
+			sourceTree = "<group>";
+		};
+		BC0FC30C2C1A6DE800539FB1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BC0FC2E32C18DC9000539FB1 /* Meal.swift */,
+				BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
