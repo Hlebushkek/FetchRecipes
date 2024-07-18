@@ -7,40 +7,18 @@
 
 import SwiftUI
 
-class MealBriefLoader {
-    private var urlSession: URLSession {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForResource = 30
-        
-        return URLSession(configuration: configuration)
-    }
-    
-    let category: String
-    
-    init(category: String) {
-        self.category = category
-    }
-    
-    func load() async throws -> [MealBrief] {
-        let categoryQuery = URLQueryItem(name: "c", value: category)
-        let apiEndpoint = Config.baseURL.appending(path: "filter.php").appending(queryItems: [categoryQuery])
-        let req = URLRequest(url: apiEndpoint)
-        
-        let (data, _) = try await urlSession.data(for: req)
-        let container = try JSONDecoder().decode(MealBriefs.self, from: data)
-        
-        return container.meals
-    }
+protocol MealLoaderProtocol {
+    func load(id: String) async throws -> Meal?
 }
 
-class MealLoader {
+class MealLoader: MealLoaderProtocol {
     private var urlSession: URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForResource = 30
-        
+
         return URLSession(configuration: configuration)
     }
-    
+
     func load(id: String) async throws -> Meal? {
         let idQuery = URLQueryItem(name: "i", value: id)
         let apiEndpoint = Config.baseURL.appending(path: "lookup.php").appending(queryItems: [idQuery])
@@ -50,5 +28,26 @@ class MealLoader {
         let meals = try JSONDecoder().decode(Meals.self, from: data)
         
         return meals.meals.first
+    }
+}
+
+class MockMealLoader: MealLoaderProtocol {
+    func load(id: String) async throws -> Meal? {
+        Meal(idMeal: id,
+             strMeal: "TestMeal",
+             strDrinkAlternate: nil,
+             strCategory: "TestCategory",
+             strArea: "TestArea",
+             strInstructions: "TestInstructions",
+             strMealThumb: URL(string: "https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg"),
+             strTags: nil,
+             strYoutube: nil,
+             ingredients: [
+                Ingreditent(name: "Ingredient1", measure: "Measure1")
+             ],
+             strSource: nil,
+             strImageSource: nil,
+             strCreativeCommonsConfirmed: nil,
+             dateModified: Date.now.formatted())
     }
 }

@@ -13,13 +13,17 @@ import SwiftUI
     var error: Error?
     private var task: Task<Void, Never>?
     
-    let loader: MealBriefLoader
+    let loader: MealBriefLoaderProtocol
     
-    init(category: String) {
-        self.loader = MealBriefLoader(category: category)
+    init(_ loader: MealBriefLoaderProtocol) {
+        self.loader = loader
     }
     
     func reload() async {
+        guard !isLoading else {
+            return
+        }
+        
         task?.cancel()
         
         await MainActor.run {

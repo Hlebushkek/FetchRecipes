@@ -19,7 +19,7 @@ struct CategoryMealListView: View {
             } else {
                 ForEach(viewModel.briefs) { brief in
                     NavigationLink {
-                        MealDetailedView(id: brief.idMeal)
+                        MealDetailedView(id: brief.idMeal, loader: MealLoader())
                             .ignoresSafeArea(edges: .top)
                     } label: {
                         MealBriefView(brief: brief)
@@ -77,5 +77,8 @@ extension CategoryMealListView {
 }
 
 #Preview {
-    CategoryMealListView()
+    ScrollView {
+        CategoryMealListView()
+    }
+    .environment(CategoryViewModel(MockMealBriefLoader(category: Config.category)))
 }

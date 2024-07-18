@@ -11,7 +11,7 @@ import SwiftUI
 struct FetchRecipesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(category: Config.category)
+            ContentView(loader: MealBriefLoader(category: Config.category))
         }
     }
 }

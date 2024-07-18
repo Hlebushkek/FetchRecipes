@@ -12,8 +12,8 @@ struct MealDetailedView: View {
     
     @State private var viewModel: MealViewModel
     
-    init(id: String) {
-        self.viewModel = MealViewModel(id: id)
+    init(id: String, loader: MealLoaderProtocol) {
+        self.viewModel = MealViewModel(id: id, loader: loader)
     }
     
     var body: some View {
@@ -56,10 +56,6 @@ struct MealDetailedView: View {
         }
         .redacted(reason: viewModel.isLoading && viewModel.meal == nil ? .placeholder : [])
         .refreshable {
-            guard !viewModel.isLoading else {
-                return
-            }
-            
             await viewModel.reload()
         }
         .task {
@@ -69,5 +65,5 @@ struct MealDetailedView: View {
 }
 
 #Preview {
-    MealDetailedView(id: "0")
+    MealDetailedView(id: "0", loader: MockMealLoader())
 }

@@ -22,6 +22,7 @@
 		BC0FC2F82C1A5FB100539FB1 /* View+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC2F72C1A5FB100539FB1 /* View+ErrorHandling.swift */; };
 		BC0FC3022C1A62B100539FB1 /* FetchRecipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC3012C1A62B100539FB1 /* FetchRecipesTests.swift */; };
 		BC7E37732C49C9D9009746A8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7E37722C49C9D9009746A8 /* ImageCache.swift */; };
+		BC7E37752C49D3E4009746A8 /* MealBriefLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7E37742C49D3E4009746A8 /* MealBriefLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		BC0FC2FF2C1A62B100539FB1 /* FetchRecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchRecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0FC3012C1A62B100539FB1 /* FetchRecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecipesTests.swift; sourceTree = "<group>"; };
 		BC7E37722C49C9D9009746A8 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		BC7E37742C49D3E4009746A8 /* MealBriefLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealBriefLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				BC0FC2E32C18DC9000539FB1 /* Meal.swift */,
+				BC7E37742C49D3E4009746A8 /* MealBriefLoader.swift */,
 				BC0FC2E72C18E88C00539FB1 /* MealLoader.swift */,
 			);
 			path = Models;
@@ -279,6 +282,7 @@
 				BC0FC2E82C18E88C00539FB1 /* MealLoader.swift in Sources */,
 				BC0FC2F22C1A438C00539FB1 /* CategoryViewModel.swift in Sources */,
 				BC0FC2D62C18DB5900539FB1 /* FetchRecipesApp.swift in Sources */,
+				BC7E37752C49D3E4009746A8 /* MealBriefLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

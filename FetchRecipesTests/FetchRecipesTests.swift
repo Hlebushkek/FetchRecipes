@@ -10,7 +10,7 @@ import XCTest
 
 final class FetchRecipesTests: XCTestCase {
     func testFetchMealBriefsSuccess() async {
-        let categoryViewModel = CategoryViewModel(category: Config.category)
+        let categoryViewModel = CategoryViewModel(MockMealBriefLoader(category: Config.category))
         await categoryViewModel.reload()
         
         if let error = categoryViewModel.error {
@@ -23,7 +23,7 @@ final class FetchRecipesTests: XCTestCase {
     func testFetchMealsSuccess() async {
         let mealID = "52772"
         
-        let mealViewModel = MealViewModel(id: mealID)
+        let mealViewModel = MealViewModel(id: mealID, loader: MockMealLoader())
         await mealViewModel.reload()
         
         if let error = mealViewModel.error {
@@ -34,15 +34,15 @@ final class FetchRecipesTests: XCTestCase {
     }
    
     func testFetchMealsFailure() async {
-       let mealID = "0"
-       
-       let mealViewModel = MealViewModel(id: mealID)
-       await mealViewModel.reload()
-       
-       if let error = mealViewModel.error {
-           XCTAssertNil(mealViewModel.meal)
-       } else {
-           XCTFail("Expected failure, got success instead")
-       }
-   }
+        let mealID = "0"
+        
+        let mealViewModel = MealViewModel(id: mealID, loader: MockMealLoader())
+        await mealViewModel.reload()
+        
+        if let _ = mealViewModel.error {
+            XCTAssertNil(mealViewModel.meal)
+        } else {
+            XCTFail("Expected failure, got success instead")
+        }
+    }
 }

@@ -12,16 +12,21 @@ import Foundation
     var error: Error?
     private var task: Task<Void, Never>?
     
-    var id: String
+    private let id: String
     var meal: Meal?
     
-    let loader = MealLoader()
+    private let loader: MealLoaderProtocol
     
-    init(id: String) {
+    init(id: String, loader: MealLoaderProtocol) {
         self.id = id
+        self.loader = loader
     }
     
     func reload() async {
+        guard !isLoading else {
+            return
+        }
+        
         task?.cancel()
         
         await MainActor.run {

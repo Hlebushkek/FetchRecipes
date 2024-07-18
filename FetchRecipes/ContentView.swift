@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var viewModel: CategoryViewModel
     
-    init(category: String) {
-        self.viewModel = CategoryViewModel(category: category)
+    init(loader: MealBriefLoaderProtocol) {
+        self.viewModel = CategoryViewModel(loader)
     }
     
     var body: some View {
@@ -21,11 +21,7 @@ struct ContentView: View {
                     .padding(.horizontal)
                     .environment(viewModel)
             }
-            .refreshable {
-                guard !viewModel.isLoading else {
-                    return
-                }
-                
+            .refreshable {    
                 await viewModel.reload()
             }
         }
@@ -33,5 +29,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(category: Config.category)
+    ContentView(loader: MockMealBriefLoader(category: Config.category))
 }
