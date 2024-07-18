@@ -12,7 +12,7 @@ struct MealDetailedView: View {
     
     @State private var viewModel: MealViewModel
     
-    init(id: String, loader: MealLoaderProtocol) {
+    init(id: String, _ loader: MealLoaderProtocol) {
         self.viewModel = MealViewModel(id: id, loader: loader)
     }
     
@@ -65,5 +65,5 @@ struct MealDetailedView: View {
 }
 
 #Preview {
-    MealDetailedView(id: "0", loader: MockMealLoader())
+    MealDetailedView(id: "0", MockMealLoader())
 }

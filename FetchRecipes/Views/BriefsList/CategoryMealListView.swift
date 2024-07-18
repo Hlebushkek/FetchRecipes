@@ -19,7 +19,7 @@ struct CategoryMealListView: View {
             } else {
                 ForEach(viewModel.briefs) { brief in
                     NavigationLink {
-                        MealDetailedView(id: brief.idMeal, loader: MealLoader())
+                        MealDetailedView(id: brief.idMeal, MealLoader())
                             .ignoresSafeArea(edges: .top)
                     } label: {
                         MealBriefView(brief: brief)
@@ -29,7 +29,7 @@ struct CategoryMealListView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.loader.category)
+        .navigationTitle(viewModel.category)
         .task {
             await viewModel.reload()
         }
@@ -77,8 +77,10 @@ extension CategoryMealListView {
 }
 
 #Preview {
-    ScrollView {
-        CategoryMealListView()
+    NavigationStack {
+        ScrollView {
+            CategoryMealListView()
+        }
+        .environment(CategoryViewModel(MockMealBriefLoader(category: Config.category)))
     }
-    .environment(CategoryViewModel(MockMealBriefLoader(category: Config.category)))
 }

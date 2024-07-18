@@ -19,6 +19,10 @@ import SwiftUI
         self.loader = loader
     }
     
+    var category: String {
+        loader.category
+    }
+    
     func reload() async {
         guard !isLoading else {
             return
