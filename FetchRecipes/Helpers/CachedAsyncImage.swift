@@ -18,60 +18,81 @@ struct CachedAsyncImage<Content>: View where Content: View {
     
     @State private var phase: AsyncImagePhase = .empty
     private let urlSession: URLSession = .shared
+    private let cache: ImageCaching
     
-    init(url: URL? = nil, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
+    init(url: URL? = nil, cache: ImageCaching = ImageCache.shared, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
         self.url = url
         self.content = content
+        self.cache = cache
     }
     
     var body: some View {
         content(phase)
             .task(id: url) {
-                guard let url else {
-                    withAnimation { phase = .empty }
-                    return
-                }
-                
-                if let cachedImage = ImageCache.shared.get(for: url) {
-                    withAnimation { phase = .success(Image(uiImage: cachedImage)) }
-                    return
-                }
-                
-                do {
-                    let (data, _) = try await URLSession.shared.data(from: url)
-                    guard let uiImage = UIImage(data: data) else {
-                        throw CachedAsyncImageError.invalidImageData
-                    }
-                    
-                    ImageCache.shared.set(uiImage, for: url)
-                    withAnimation { phase = .success(Image(uiImage: uiImage)) }
-                } catch {
-                    if let urlError = error as? URLError {
-                        phase = .failure(CachedAsyncImageError.networkError(urlError))
-                    } else {
-                        phase = .failure(CachedAsyncImageError.networkError(error))
-                    }
-                }
+                await loadImage()
             }
     }
-}
-
-class ImageCache {
-    static let shared = ImageCache()
     
-    private let cache = NSCache<NSString, UIImage>()
-    
-    private init() {}
-    
-    func set(_ image: UIImage, for url: URL) {
-        cache.setObject(image, forKey: url.absoluteString as NSString)
-    }
-
-    func get(for url: URL) -> UIImage? {
-        return cache.object(forKey: url.absoluteString as NSString)
+    private func loadImage() async {
+        guard let url else {
+            withAnimation { phase = .empty }
+            return
+        }
+        
+        if let cachedImage = await cache.get(for: url) {
+            withAnimation { phase = .success(Image(uiImage: cachedImage)) }
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            guard let uiImage = UIImage(data: data) else {
+                throw CachedAsyncImageError.invalidImageData
+            }
+            
+            await cache.set(uiImage, for: url)
+            withAnimation { phase = .success(Image(uiImage: uiImage)) }
+        } catch {
+            let cachedError: CachedAsyncImageError = (error as? URLError).map { .networkError($0) } ?? .networkError(error)
+            withAnimation { phase = .failure(cachedError) }
+        }
     }
 }
 
 #Preview {
-    CachedAsyncImage(url: nil) { _ in EmptyView() }
+    struct Preview: View {
+        @State private var testURL: URL? = nil
+        let cache = MockImageCache()
+        
+        var body: some View {
+            CachedAsyncImage(url: testURL, cache: cache) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                case .failure:
+                    Image(systemName: "xmark.circle")
+                        .resizable()
+                        .scaledToFit()
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 128, height: 128)
+            .task {
+                guard let sampleImage = UIImage(systemName: "photo"),
+                      let url = URL(string: "https://example.com/test.png") else {
+                    return
+                }
+                
+                await cache.set(sampleImage, for: url)
+                await MainActor.run { testURL = url }
+            }
+        }
+    }
+    
+    return Preview()
 }
